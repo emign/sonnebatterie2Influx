@@ -1,0 +1,49 @@
+#!/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/pi
+influxUsername=
+influxPw=
+
+curl -o /home/pi/sb.json 'http://192.168.178.47:8080/api/v1/status'
+
+BackupBuffer=$(cat /home/pi/sb.json | jq '.["BackupBuffer"]')
+BatteryCharging=$(cat /home/pi/sb.json | jq '.["BatteryCharging"]')
+BatteryDischarging=$(cat /home/pi/sb.json | jq '.["BatteryDischarging"]')
+Consumption_W=$(cat /home/pi/sb.json | jq '.["Consumption_W"]')
+Fac=$(cat /home/pi/sb.json | jq '.["Fac"]')
+FlowConsumptionBattery=$(cat /home/pi/sb.json | jq '.["FlowConsumptionBattery"]')
+FlowConsumptionGrid=$(cat /home/pi/sb.json | jq '.["FlowConsumptionGrid"]')
+FlowConsumptionProduction=$(cat /home/pi/sb.json | jq '.["FlowConsumptionProduction"]')
+FlowGridBattery=$(cat /home/pi/sb.json | jq '.["FlowGridBattery"]')
+FlowProductionBattery=$(cat /home/pi/sb.json | jq '.["FlowProductionBattery"]')
+FlowProductionGrid=$(cat /home/pi/sb.json | jq '.["FlowProductionGrid"]')
+GridFeedIn_W=$(cat /home/pi/sb.json | jq '.["GridFeedIn_W"]')
+IsSystemInstalled=$(cat /home/pi/sb.json | jq '.["IsSystemInstalled"]')
+OperatingMode=$(cat /home/pi/sb.json | jq '.["OperatingMode"]')
+Pac_total_W=$(cat /home/pi/sb.json | jq '.["Pac_total_W"]')
+Production_W=$(cat /home/pi/sb.json | jq '.["Production_W"]')
+RSOC=$(cat /home/pi/sb.json | jq '.["RSOC"]')
+SystemStatus=$(cat /home/pi/sb.json | jq '.["SystemStatus"]')
+USOC=$(cat /home/pi/sb.json | jq '.["USOC"]')
+Uac=$(cat /home/pi/sb.json | jq '.["Uac"]')
+Ubat=$(cat /home/pi/sb.json | jq '.["Ubat"]')
+
+
+curl -i -XPOST -u $influxUsername:$influxPw 'http://localhost:8086/write?db=sonnenbatterie' --data-binary "BackupBuffer value=${BackupBuffer}"
+curl -i -XPOST -u $influxUsername:$influxPw 'http://localhost:8086/write?db=sonnenbatterie' --data-binary "BatteryCharging value=${BatteryCharging}"
+curl -i -XPOST -u $influxUsername:$influxPw 'http://localhost:8086/write?db=sonnenbatterie' --data-binary "BatteryDischarging value=${BatteryDischarging}"
+curl -i -XPOST -u $influxUsername:$influxPw 'http://localhost:8086/write?db=sonnenbatterie' --data-binary "Consumption_W value=${Consumption_W}"
+curl -i -XPOST -u $influxUsername:$influxPw 'http://localhost:8086/write?db=sonnenbatterie' --data-binary "Fac value=${Fac}"
+curl -i -XPOST -u $influxUsername:$influxPw 'http://localhost:8086/write?db=sonnenbatterie' --data-binary "FlowConsumptionBattery value=${FlowConsumptionBattery}"
+curl -i -XPOST -u $influxUsername:$influxPw 'http://localhost:8086/write?db=sonnenbatterie' --data-binary "FlowConsumptionGrid value=${FlowConsumptionGrid}"
+curl -i -XPOST -u $influxUsername:$influxPw 'http://localhost:8086/write?db=sonnenbatterie' --data-binary "FlowConsumptionProduction value=${FlowConsumptionProduction}"
+curl -i -XPOST -u $influxUsername:$influxPw 'http://localhost:8086/write?db=sonnenbatterie' --data-binary "FlowGridBattery value=${FlowGridBattery}"
+curl -i -XPOST -u $influxUsername:$influxPw 'http://localhost:8086/write?db=sonnenbatterie' --data-binary "FlowProductionGrid value=${FlowProductionGrid}"
+curl -i -XPOST -u $influxUsername:$influxPw 'http://localhost:8086/write?db=sonnenbatterie' --data-binary "GridFeedIn_W value=${GridFeedIn_W}"
+curl -i -XPOST -u $influxUsername:$influxPw 'http://localhost:8086/write?db=sonnenbatterie' --data-binary "IsSystemInstalled value=${IsSystemInstalled}"
+curl -i -XPOST -u $influxUsername:$influxPw 'http://localhost:8086/write?db=sonnenbatterie' --data-binary "OperatingMode value=${OperatingMode}"
+curl -i -XPOST -u $influxUsername:$influxPw 'http://localhost:8086/write?db=sonnenbatterie' --data-binary "Pac_total_W value=${Pac_total_W}"
+curl -i -XPOST -u $influxUsername:$influxPw 'http://localhost:8086/write?db=sonnenbatterie' --data-binary "Production_W value=${Production_W}"
+curl -i -XPOST -u $influxUsername:$influxPw 'http://localhost:8086/write?db=sonnenbatterie' --data-binary "RSOC value=${RSOC}"
+curl -i -XPOST -u $influxUsername:$influxPw 'http://localhost:8086/write?db=sonnenbatterie' --data-binary "SystemStatus value=${SystemStatus}"
+curl -i -XPOST -u $influxUsername:$influxPw 'http://localhost:8086/write?db=sonnenbatterie' --data-binary "Uac value=${Uac}"
+curl -i -XPOST -u $influxUsername:$influxPw 'http://localhost:8086/write?db=sonnenbatterie' --data-binary "Ubat value=${Ubat}"
